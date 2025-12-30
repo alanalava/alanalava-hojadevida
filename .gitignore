@@ -1,6 +1,13 @@
-venv 
+venv
 db.sqlite3
 .vscode
 media
 __pycache__
 **/__pycache__
+*.pyc
+
+# Nuevos agregados
+.env
+staticfiles/
+*.log
+Thumbs.db
