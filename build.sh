@@ -2,18 +2,13 @@
 # exit on error
 set -o errexit
 
-# 1. Instalar librerías
 pip install -r requirements.txt
-
-# 2. Recolectar archivos estáticos
 python manage.py collectstatic --no-input
-
-# 3. --- MIGRACIONES (ESTO ARREGLA EL ERROR 500) ---
-python manage.py makemigrations
 python manage.py migrate
 
-# 4. --- CREAR SUPERUSUARIO ALAN ---
-# Crea el usuario 'alan' si no existe.
+# 4. Crear tu Superusuario (SOLO SI NO EXISTE)
+# He puesto 'alan' como usuario y 'admin123' como contraseña.
+# ¡CÁMBIALOS AQUÍ ABAJO SI QUIERES! 👇
 echo "from django.contrib.auth import get_user_model; \
 User = get_user_model(); \
 User.objects.filter(username='alan').exists() or \
