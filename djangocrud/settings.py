@@ -10,7 +10,7 @@ BASE_DIR = base_dir
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
 
 # DEBUG será False si estamos en RENDER, True si estamos en tu PC
-DEBUG = "RENDER" not in os.environ
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
