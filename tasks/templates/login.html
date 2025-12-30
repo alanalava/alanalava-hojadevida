@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión | Alan Alava</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(37, 99, 235, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .avatar-circle {
+            width: 80px; height: 80px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white; font-size: 2rem;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+        h2 { color: #334155; margin-bottom: 2rem; font-weight: 600; }
+        
+        .form-group { margin-bottom: 1.5rem; text-align: left; }
+        label { display: block; margin-bottom: 8px; color: #64748b; font-size: 0.9rem; font-weight: 500; }
+        
+        input {
+            width: 100%; padding: 12px 15px;
+            border: 2px solid #e2e8f0; border-radius: 10px;
+            font-family: 'Poppins', sans-serif; box-sizing: border-box;
+            transition: all 0.3s;
+        }
+        input:focus { outline: none; border-color: #2563eb; background: #eff6ff; }
+
+        button {
+            width: 100%; padding: 14px;
+            background: linear-gradient(to right, #2563eb, #1d4ed8);
+            color: white; border: none; border-radius: 10px;
+            font-size: 1rem; font-weight: 600; cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4); }
+        
+        .back-link { display: block; margin-top: 1.5rem; color: #94a3b8; text-decoration: none; font-size: 0.9rem; }
+        .back-link:hover { color: #2563eb; }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="avatar-circle">
+            <i class="fas fa-user-lock"></i>
+        </div>
+        <h2>Bienvenido</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label>Usuario</label>
+                <input type="text" name="username" placeholder="Ingresa tu usuario" required>
+            </div>
+
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" name="password" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+
+        <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Volver al Portafolio</a>
+    </div>
+
+</body>
+</html>

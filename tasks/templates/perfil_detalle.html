@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="header-title">
+    <i class="fas fa-id-card"></i> Resumen Profesional y Datos Personales
+</div>
+
+<div class="card" style="border-left: 5px solid var(--primary);">
+    <h3 style="margin-top: 0; color: var(--primary);">
+        <i class="fas fa-user-tie"></i> Perfil Profesional
+    </h3>
+    <p style="line-height: 1.6; font-size: 1.1rem; color: var(--text-dark);">
+        {{ perfil.descripcionperfil|default:"Desarrollador Web apasionado por la creación de soluciones digitales eficientes y escalables. Especializado en el ecosistema de Python y Django para construir aplicaciones robustas." }}
+    </p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+    
+    <div class="card">
+        <h3 style="color: var(--primary); margin-top: 0;"><i class="fas fa-fingerprint"></i> Identificación</h3>
+        <p><strong>Cédula:</strong> {{ perfil.numerocedula }}</p>
+        <p><strong>Nacionalidad:</strong> {{ perfil.nacionalidad }}</p>
+        <p><strong>Estado Civil:</strong> {{ perfil.estadocivil }}</p>
+        <p><strong>Sexo:</strong> {{ perfil.get_sexo_display }}</p>
+    </div>
+
+    <div class="card">
+        <h3 style="color: var(--primary); margin-top: 0;"><i class="fas fa-address-book"></i> Contacto</h3>
+        
+        {% if perfil.email %}
+        <p>
+            <strong>Email:</strong><br>
+            <a href="mailto:{{ perfil.email }}" style="text-decoration: none; color: #1f2937;">
+                {{ perfil.email }}
+            </a>
+        </p>
+        {% endif %}
+
+        {% if perfil.telefonofijo %}
+        <p>
+            <strong>Teléfono:</strong><br>
+            <a href="tel:{{ perfil.telefonofijo }}" style="text-decoration: none; color: #1f2937;">
+                {{ perfil.telefonofijo }}
+            </a>
+        </p>
+        {% endif %}
+    </div>
+    <div class="card">
+        <h3 style="color: var(--primary); margin-top: 0;"><i class="fas fa-map-marker-alt"></i> Localización</h3>
+        <p><strong>Domicilio:</strong> {{ perfil.direcciondomiciliaria }}</p>
+        <p><strong>Lugar de Nacimiento:</strong> {{ perfil.lugarnacimiento }}</p>
+        <p><strong>Fecha de Nacimiento:</strong> {{ perfil.fechanacimiento|date:"d M, Y" }}</p>
+    </div>
+
+    <div class="card">
+        <h3 style="color: var(--primary); margin-top: 0;"><i class="fas fa-chart-line"></i> Trayectoria</h3>
+        <p><strong>Experiencias:</strong> {{ perfil.experiencias.count }} cargos</p>
+        <p><strong>Logros:</strong> {{ perfil.reconocimientos.count }} reconocimientos</p>
+        <p><strong>Cursos:</strong> {{ perfil.cursos.count }} certificados</p>
+    </div>
+</div>
+{% endblock %}

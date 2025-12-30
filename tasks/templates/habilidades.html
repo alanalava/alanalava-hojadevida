@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="header-title">
+    <i class="fas fa-laptop-code"></i> Habilidades Técnicas
+</div>
+
+<div class="skills-grid">
+    
+    {% for skill in perfil.habilidades.all %}
+    
+    <div class="card skill-item">
+        <div class="skill-info">
+            <span>{{ skill.nombre_habilidad }}</span>
+            <span class="skill-percentage">{{ skill.porcentaje }}%</span>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: {{ skill.porcentaje }}%;"></div>
+        </div>
+    </div>
+
+    {% empty %}
+    <div class="card">
+        <p style="text-align: center; color: #64748b; padding: 20px;">
+            <i class="fas fa-info-circle"></i> No hay habilidades registradas. Ve al Admin para agregarlas.
+        </p>
+    </div>
+    {% endfor %}
+    
+</div>
+
+{% endblock %}

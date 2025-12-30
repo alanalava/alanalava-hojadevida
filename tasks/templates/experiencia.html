@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2 class="header-title"><i class="fas fa-briefcase"></i> Experiencia Laboral</h2>
+    
+    {% for exp in perfil.experiencias.all %}
+        {% if exp.activarparaqueseveaenfront %}
+        <div class="card">
+            <h3>{{ exp.cargodesempenado }}</h3>
+            <span style="color: #666;">{{ exp.nombrempresa }} | {{ exp.fechainiciogestion }}</span>
+            <p>{{ exp.descripcionfunciones }}</p>
+        </div>
+        {% endif %}
+    {% empty %}
+        <p>No hay experiencia registrada.</p>
+    {% endfor %}
+{% endblock %}

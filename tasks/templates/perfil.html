@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="header-title"><i class="fas fa-user-circle"></i> Perfil Profesional</h2>
+
+    <div class="card" style="margin-bottom: 30px;">
+        <h3 style="margin-top: 0; color: #1f2937; margin-bottom: 15px;">
+            Sobre mí
+        </h3>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: #4b5563;">
+            {{ perfil.descripcionperfil|default:"Aquí aparecerá tu descripción profesional. Ve al panel de administración para escribir un resumen sobre tus objetivos y experiencia." }}
+        </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;">
+
+        <div class="card">
+            <h4 style="margin-top: 0; color: #2563eb; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 15px;">
+                <i class="fas fa-id-card"></i> Datos Personales
+            </h4>
+            
+            <div style="margin-bottom: 12px;">
+                <strong style="display:block; font-size: 0.85rem; color: #6b7280;">CÉDULA DE IDENTIDAD</strong>
+                <span style="font-size: 1.05rem; font-weight: 500;">{{ perfil.numerocedula }}</span>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <strong style="display:block; font-size: 0.85rem; color: #6b7280;">NACIONALIDAD</strong>
+                <span style="font-size: 1.05rem;">{{ perfil.nacionalidad }}</span>
+            </div>
+
+            <div>
+                <strong style="display:block; font-size: 0.85rem; color: #6b7280;">ESTADO CIVIL</strong>
+                <span style="font-size: 1.05rem;">{{ perfil.estadocivil }}</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4 style="margin-top: 0; color: #2563eb; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 15px;">
+                <i class="fas fa-address-book"></i> Información de Contacto
+            </h4>
+
+            <div style="margin-bottom: 12px;">
+                <strong style="display:block; font-size: 0.85rem; color: #6b7280;">TELÉFONO MÓVIL</strong>
+                <a href="tel:{{ perfil.telefonofijo }}" style="text-decoration: none; color: #1f2937; font-size: 1.05rem; font-weight: 500;">
+                    <i class="fas fa-phone-alt" style="color: #10b981;"></i> {{ perfil.telefonofijo }}
+                </a>
+            </div>
+
+            {% if perfil.telefonoconvencional %}
+            <div style="margin-bottom: 12px;">
+                <strong style="display:block; font-size: 0.85rem; color: #6b7280;">TELÉFONO CONVENCIONAL</strong>
+                <span style="font-size: 1.05rem;">{{ perfil.telefonoconvencional }}</span>
+            </div>
+            {% endif %}
+
+            {% if perfil.sitioweb %}
+            <div>
+                <strong style="display:block; font-size: 0.85rem; color: #6b7280;">SITIO WEB / PORTAFOLIO</strong>
+                <a href="{{ perfil.sitioweb }}" target="_blank" style="color: #2563eb; text-decoration: none;">
+                    {{ perfil.sitioweb }}
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h4 style="margin-top: 0; color: #2563eb; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 15px;">
+                <i class="fas fa-map-marker-alt"></i> Ubicación
+            </h4>
+
+            <div style="margin-bottom: 12px;">
+                <strong style="display:block; font-size: 0.85rem; color: #6b7280;">DIRECCIÓN DOMICILIARIA</strong>
+                <p style="margin: 0; font-size: 1.05rem;">{{ perfil.direcciondomiciliaria }}</p>
+            </div>
+
+            <div>
+                <strong style="display:block; font-size: 0.85rem; color: #6b7280;">LUGAR DE NACIMIENTO</strong>
+                <span style="font-size: 1.05rem;">{{ perfil.lugarnacimiento }}</span>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

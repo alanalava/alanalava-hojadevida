@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="header-title"><i class="fas fa-graduation-cap"></i> Educación y Cursos</h2>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px;">
+
+    {% for curso in perfil.cursos.all %}
+        {% if curso.activarparaqueseveaenfront %}
+
+        <div class="card" style="display: flex; flex-direction: column;">
+            
+            <h3 style="margin-top: 0; color: #1f2937; font-size: 1.3rem; margin-bottom: 10px;">
+                {{ curso.nombrecurso }}
+            </h3>
+
+            <div style="color: #6b7280; font-weight: 500; margin-bottom: 15px; font-size: 0.95rem;">
+                <i class="far fa-building" style="color: #2563eb;"></i> {{ curso.entidadpatrocinadora }}
+                <div style="margin-top: 5px; font-size: 0.9rem;">
+                    <i class="far fa-calendar-alt"></i> Finalizado: {{ curso.fechafin|date:"F Y" }}
+                </div>
+            </div>
+
+            <p style="color: #4b5563; line-height: 1.6; flex-grow: 1;">
+                {{ curso.descripcioncurso }}
+            </p>
+            
+            <div style="margin-top: 20px;">
+                <span style="background: #eff6ff; color: #2563eb; padding: 6px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">
+                    ⏱ {{ curso.totalhoras }} Horas Totales
+                </span>
+            </div>
+
+            {% if curso.rutacertificado %}
+                <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 20px 0 15px 0;">
+                <a href="{{ curso.rutacertificado.url }}" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; color: #2563eb; text-decoration: none; font-weight: 600; transition: color 0.2s;">
+                    <i class="fas fa-file-pdf"></i> Ver Certificado Oficial
+                </a>
+            {% endif %}
+
+        </div>
+        {% endif %}
+    {% empty %}
+        <div class="card">
+            <p style="color: #6b7280;">No hay registros de educación para mostrar en este momento.</p>
+        </div>
+    {% endfor %}
+
+    </div>
+{% endblock %}
