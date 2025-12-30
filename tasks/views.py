@@ -4,12 +4,13 @@ from django.core.management import call_command
 from django.http import HttpResponse
 
 def get_perfil():
-    # Solo traemos las tablas que SÍ existen en models.py
-    return DatosPersonales.objects.prefetch_related(
-        'experiencias', 'reconocimientos', 'cursos', 'ventas'
-    ).filter(perfilactivo=True).first()
+    # --- CORRECCIÓN CLAVE ---
+    # Quitamos .filter(perfilactivo=True) porque ese campo YA NO EXISTE.
+    # Quitamos .prefetch_related(...) porque las tablas de experiencias/ventas NO EXISTEN AÚN.
+    # Solo traemos el primer dato simple que encuentre.
+    return DatosPersonales.objects.first()
 
-# --- Tus vistas anteriores ---
+# --- Vistas ---
 def perfil_view(request):
     return render(request, 'perfil.html', {'perfil': get_perfil()})
 
@@ -28,12 +29,11 @@ def logros_view(request):
 def ventas_view(request):
     return render(request, 'ventas.html', {'perfil': get_perfil()})
 
-# --- ESTO ES LO QUE DEBES AGREGAR ---
 def perfil_detalle_view(request):
-    """Vista para mostrar el resumen al tocar la 'A' azul"""
-   # Solo trae el primero que encuentres, sin filtros raros
-    perfil = DatosPersonales.objects.first()
+    # Aquí te faltaba el 'return render', sin eso daba error también
+    return render(request, 'perfil_detalle.html', {'perfil': get_perfil()})
 
+# --- REPARADOR DE EMERGENCIA ---
 def reparar_db(request):
     try:
         # 1. Forzar la creación de los planos (migrations)
