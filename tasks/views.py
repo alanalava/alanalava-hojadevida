@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .models import DatosPersonales
+from django.core.management import call_command
+from django.http import HttpResponse
 
 def get_perfil():
     # Solo traemos las tablas que SÍ existen en models.py
@@ -30,3 +32,13 @@ def ventas_view(request):
 def perfil_detalle_view(request):
     """Vista para mostrar el resumen al tocar la 'A' azul"""
     return render(request, 'perfil_detalle.html', {'perfil': get_perfil()})
+
+def reparar_db(request):
+    try:
+        # 1. Forzar la creación de los planos (migrations)
+        call_command('makemigrations', 'tasks')
+        # 2. Forzar la construcción de las tablas (migrate)
+        call_command('migrate')
+        return HttpResponse("<h1>¡ÉXITO! Base de datos reparada.</h1> <p>Ahora intenta entrar al admin.</p>")
+    except Exception as e:
+        return HttpResponse(f"<h1>ERROR CRÍTICO:</h1> <p>{str(e)}</p>")
