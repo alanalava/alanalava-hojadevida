@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-clave-temporal-dev')
 
 # DEBUG: True en tu PC, False en Render
-DEBUG = 'RENDER' not in os.environ
+DEBUG = True
 
 # PERMITIR TODO (Para evitar errores de bloqueo en Render)
 ALLOWED_HOSTS = ["*"]
