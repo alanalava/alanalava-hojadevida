@@ -1,22 +1,20 @@
+import os
 from pathlib import Path
-import os 
 import dj_database_url
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-base_dir = Path(__file__).resolve().parent.parent
-BASE_DIR = base_dir
+# === RUTA BASE ===
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
+# === SEGURIDAD ===
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-clave-temporal-dev')
 
-# DEBUG será False si estamos en RENDER, True si estamos en tu PC
-DEBUG = "RENDER" not in os.environ
+# DEBUG: True en tu PC, False en Render
+DEBUG = 'RENDER' not in os.environ
 
+# PERMITIR TODO (Para evitar errores de bloqueo en Render)
 ALLOWED_HOSTS = ["*"]
-RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
+# === APLICACIONES ===
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -24,16 +22,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # --- CLOUDINARY ---
+    # --- LIBRERÍAS DE TERCEROS ---
     'cloudinary_storage',
     'cloudinary',
-    # ------------------
-    'tasks' # Tu app
+    # --- TUS APPS ---
+    'tasks',
 ]
 
+# === MIDDLEWARE ===
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # <--- Importante posición
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # <--- VITAL PARA RENDER
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -44,10 +43,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'djangocrud.urls'
 
+# === TEMPLATES ===
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')], # <--- Agregué la carpeta templates
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -62,15 +62,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangocrud.wsgi.application'
 
-# Database con soporte para Render
+# === BASE DE DATOS (EL CEREBRO) ===
 DATABASES = {
     'default': dj_database_url.config(
+        # En tu PC usa SQLite, en Render busca la variable DATABASE_URL
         default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'),
         conn_max_age=600
     )
 }
 
-# Password validation
+# === VALIDACIÓN DE CONTRASEÑAS ===
 AUTH_PASSWORD_VALIDATORS = [
     { 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
     { 'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
@@ -78,42 +79,38 @@ AUTH_PASSWORD_VALIDATORS = [
     { 'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', },
 ]
 
-LANGUAGE_CODE = 'es-ec' # Lo cambié a español ecuador como el otro
+# === IDIOMA Y ZONA HORARIA ===
+LANGUAGE_CODE = 'es-ec'
 TIME_ZONE = 'America/Guayaquil'
 USE_I18N = True
 USE_TZ = True
 
-# --- STATIC FILES (CSS/JS) ---
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Obligatorio para Render
+# === ARCHIVOS ESTÁTICOS (CSS/JS) ===
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# Optimización para Whitenoise
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+# Optimización WhiteNoise (Archivos estáticos)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# --- CONFIGURACIÓN CLOUDINARY ---
+# === ARCHIVOS MEDIA (FOTOS) - CLOUDINARY ===
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 
-if CLOUDINARY_STORAGE['CLOUD_NAME']:
+# Configuración automática: Si hay claves, usa Cloudinary. Si no, usa local.
+if os.environ.get('CLOUDINARY_CLOUD_NAME'):
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     MEDIA_URL = '/media/'
 else:
+    # Fallback para desarrollo local sin internet
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# --- LOGIN / LOGOUT ---
-LOGIN_REDIRECT_URL = '/admin/'  
+# === LOGIN ===
+LOGIN_REDIRECT_URL = '/admin/'
 LOGOUT_REDIRECT_URL = '/'
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
