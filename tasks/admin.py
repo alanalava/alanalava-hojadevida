@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import DatosPersonales
+from .models import *
 
-# Registro simple y directo
 admin.site.register(DatosPersonales)
+admin.site.register(ExperienciaLaboral)
+admin.site.register(Reconocimientos)
+admin.site.register(CursosRealizados)
+admin.site.register(VentaGarage)
+admin.site.register(Habilidades)

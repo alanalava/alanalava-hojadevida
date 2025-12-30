@@ -10,7 +10,7 @@
         <i class="fas fa-user-tie"></i> Perfil Profesional
     </h3>
     <p style="line-height: 1.6; font-size: 1.1rem; color: var(--text-dark);">
-        {{ perfil.descripcionperfil|default:"Desarrollador Web apasionado por la creación de soluciones digitales eficientes y escalables. Especializado en el ecosistema de Python y Django para construir aplicaciones robustas." }}
+        {{ perfil.descripcionperfil|default:"Desarrollador Web apasionado por la creación de soluciones digitales eficientes y escalables." }}
     </p>
 </div>
 
@@ -27,24 +27,25 @@
     <div class="card">
         <h3 style="color: var(--primary); margin-top: 0;"><i class="fas fa-address-book"></i> Contacto</h3>
         
-        {% if perfil.email %}
+        {% if perfil.email_contacto %}
         <p>
             <strong>Email:</strong><br>
-            <a href="mailto:{{ perfil.email }}" style="text-decoration: none; color: #1f2937;">
-                {{ perfil.email }}
+            <a href="mailto:{{ perfil.email_contacto }}" style="text-decoration: none; color: #1f2937;">
+                {{ perfil.email_contacto }}
             </a>
         </p>
         {% endif %}
 
-        {% if perfil.telefonofijo %}
+        {% if perfil.telefono %}
         <p>
             <strong>Teléfono:</strong><br>
-            <a href="tel:{{ perfil.telefonofijo }}" style="text-decoration: none; color: #1f2937;">
-                {{ perfil.telefonofijo }}
+            <a href="tel:{{ perfil.telefono }}" style="text-decoration: none; color: #1f2937;">
+                {{ perfil.telefono }}
             </a>
         </p>
         {% endif %}
     </div>
+
     <div class="card">
         <h3 style="color: var(--primary); margin-top: 0;"><i class="fas fa-map-marker-alt"></i> Localización</h3>
         <p><strong>Domicilio:</strong> {{ perfil.direcciondomiciliaria }}</p>
