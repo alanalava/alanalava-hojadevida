@@ -31,7 +31,8 @@ def ventas_view(request):
 # --- ESTO ES LO QUE DEBES AGREGAR ---
 def perfil_detalle_view(request):
     """Vista para mostrar el resumen al tocar la 'A' azul"""
-    return render(request, 'perfil_detalle.html', {'perfil': get_perfil()})
+   # Solo trae el primero que encuentres, sin filtros raros
+    perfil = DatosPersonales.objects.first()
 
 def reparar_db(request):
     try:
